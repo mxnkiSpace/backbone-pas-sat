@@ -1,0 +1,87 @@
+# ==========================================================================
+# Python
+# ==========================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Entornos virtuales / gestores
+.venv/
+venv/
+env/
+# uv lo regenera; pinéalo en pyproject.toml (requires-python)
+.python-version
+
+# Caches de herramientas
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# ==========================================================================
+# Pesos / checkpoints del modelo (ver CLAUDE.md: no se versionan en git)
+# Documentar en README dónde están alojados (cluster/drive).
+#
+# EXCEPCIÓN: model/finetune-best.ptg.zip (1.5 MB, el checkpoint fine-tuneado
+# de NeuroBack) SÍ se versiona a propósito — es liviano y hace el repo
+# autocontenido/reproducible. No cae en los patrones de abajo (.ptg.zip).
+# ==========================================================================
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.safetensors
+
+# ==========================================================================
+# Datos (data/)
+# El grueso (~10 GB) NO se versiona; se obtiene con ./download_benchmarks.sh.
+# Se deja una MUESTRA curada por categoría (whitelist al final) para que la
+# estructura de data/ sea visible y alguien pueda probar el pipeline sin
+# descargar nada.
+#
+# Mecánica: ignoramos todo el contenido de data/, pero re-incluimos los
+# directorios (!data/**/) — eso permite re-incluir archivos puntuales con '!'
+# más abajo (git no puede re-incluir un archivo si su carpeta sigue excluida).
+# ==========================================================================
+data/**
+!data/**/
+
+# Artefactos auxiliares: nunca versionar (aunque caigan en data/)
+data/.gbd/
+*.done
+*.tar.gz
+
+# ---- Muestras curadas (se versionan a propósito) -------------------------
+
+# SATLIB CBS — backbone controlado (núcleo de la tesis): una instancia por
+# proporción de backbone b10..b90, para estudios por proporción.
+!data/satlib/cbs_backbone_controlled/CBS_k3_n100_m403_b10_0.cnf
+!data/satlib/cbs_backbone_controlled/CBS_k3_n100_m403_b30_0.cnf
+!data/satlib/cbs_backbone_controlled/CBS_k3_n100_m403_b50_0.cnf
+!data/satlib/cbs_backbone_controlled/CBS_k3_n100_m403_b70_0.cnf
+!data/satlib/cbs_backbone_controlled/CBS_k3_n100_m403_b90_0.cnf
+
+# SATLIB Random-3-SAT — satisfacibles (uf) e insatisfacibles (uuf)
+!data/satlib/random_3sat/uf100-01.cnf
+!data/satlib/random_3sat/uf100-010.cnf
+!data/satlib/random_3sat/UUF100.430.1000/uuf100-0100.cnf
+!data/satlib/random_3sat/UUF100.430.1000/uuf100-0101.cnf
+
+# SATLIB Graph Coloring (flat100)
+!data/satlib/graph_coloring/flat100-1.cnf
+!data/satlib/graph_coloring/flat100-10.cnf
+
+# SATLIB Planning
+!data/satlib/planning/anomaly.cnf
+!data/satlib/planning/bw_large.a.cnf
+
+# Holdout SATCOMP (sin fuga de datos) — 2 instancias pequeñas por año
+!data/satcomp_holdout/2024/sgen1-unsat-121-100.cnf.xz
+!data/satcomp_holdout/2024/sgen1-sat-180-100.cnf.xz
+!data/satcomp_holdout/2025/tseitin_n188_d3.cnf.xz
+!data/satcomp_holdout/2025/tseitin_grid_n12_m12.cnf.xz

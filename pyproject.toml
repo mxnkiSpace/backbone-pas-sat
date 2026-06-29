@@ -1,0 +1,17 @@
+[project]
+name = "backbone-pas-sat"
+version = "0.1.0"
+description = "Predict-and-Search con predicciones de backbone (GNN) y trust region, aplicado a SAT solving."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "torch==2.9.1",
+    "torch-geometric==2.7.0",
+]
+
+[dependency-groups]
+notebooks = [
+
+    "ipykernel>=6.29,<7",
+    "matplotlib",
+]
